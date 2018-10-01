@@ -11,16 +11,15 @@
     <p>Mayúscula: {{ title | uppercase }}</p>
     <p>Munúscula: {{ title | lowercase }}</p>
 
-    <h2>Formularios - Componentes</h2>
+    <h2>Formularios</h2>
     <form @submit.prevent="submit" action="" method="get">
       <input type="text" v-model="title"><br>
       <template v-for="tecnology in tecnologies">
-        <input v-model="tecnologiesSelected" type="checkbox" :id="tecnology.value" :value="tecnology.value">
-        <label :for="tecnology.value">{{ tecnology.name }}</label>
+        <tecnology :tecnology="tecnology" @checked="selectTecnology"></tecnology>
       </template>
       <button type="submit">Enviar</button>
     </form>
-    <component></component>
+
     <h2>{{ createdBy }}</h2>
   </div>
 </template>
@@ -69,6 +68,13 @@
 
       submit() {
         console.log(this.tecnologiesSelected)
+      },
+
+      selectTecnology(tecnology, checked) {
+       if(checked) return this.tecnologiesSelected.push(tecnology)
+
+       let index = this.tecnologiesSelected.indexOf(tecnology)
+       this.tecnologiesSelected.splice(index, 1)
       }
     },
 
